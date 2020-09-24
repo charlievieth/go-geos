@@ -20,17 +20,17 @@ func TestConstructor(t *testing.T) {
 
 	val = s.getX(1)
 	if val != 1 {
-		t.Errorf("Error: getX() returns wrong result %q, want 1", val)
+		t.Errorf("Error: getX() returns wrong result %f, want 1", val)
 	}
 
 	val = s.getY(1)
 	if val != 2 {
-		t.Errorf("Error: getY() returns wrong result %q, want 2", val)
+		t.Errorf("Error: getY() returns wrong result %f, want 2", val)
 	}
 
 	val = s.getZ(1)
 	if val != 3 {
-		t.Errorf("Error: getZ() returns wrong result %q, want 3", val)
+		t.Errorf("Error: getZ() returns wrong result %f, want 3", val)
 	}
 }
 

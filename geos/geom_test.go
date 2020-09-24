@@ -2,9 +2,13 @@ package geos
 
 import (
 	"encoding/hex"
+	"fmt"
 	"math"
+	"runtime"
 	"strings"
+	"sync"
 	"testing"
+	"time"
 )
 
 func TestGeometryTypeConsts(t *testing.T) {
@@ -944,4 +948,63 @@ func TestInterpolate(t *testing.T) {
 	if pt2 == nil || !pt2.Equals(CreatePoint(5, 0)) {
 		t.Errorf("Error: InterpolateNormalized() error")
 	}
+}
+
+func TestUseAfterFree(t *testing.T) {
+	done := make(chan struct{})
+	var wg sync.WaitGroup
+	for i := 0; i < runtime.NumCPU(); i++ {
+		wg.Add(1)
+		go func(id int) {
+			defer wg.Done()
+			for {
+				select {
+				case <-done:
+					return
+				default:
+					polygon := CreatePolygon([]Coord{
+						{Y: 37.813310018173176, X: -122.38048553466797},
+						{Y: 37.813310018173176, X: -122.47953414916992},
+						{Y: 37.748457761603355, X: -122.47953414916992},
+						{Y: 37.7484577616033556, X: -122.38048553466797},
+						{Y: 37.813310018173176, X: -122.38048553466797},
+					}, nil)
+
+					for i := 0; i < 100; i++ {
+						if n := polygon.GetNumGeometries(); n == 0 {
+							panic(fmt.Sprintf("polygon: GetNumGeometries: %d", 0))
+						}
+					}
+
+					polygon = BuildCrossRegionPolygon(polygon, 15)
+					if polygon == nil {
+						panic(fmt.Sprintf("nil polygon: %d", id))
+						return
+					}
+
+					for i := 0; i < 100; i++ {
+						if n := polygon.GetNumGeometries(); n == 0 {
+							panic(fmt.Sprintf("polygon: GetNumGeometries: %d", 0))
+						}
+					}
+				}
+			}
+		}(i)
+	}
+
+	time.Sleep(time.Second * 5)
+	close(done)
+	wg.Wait()
+}
+
+func BuildCrossRegionPolygon(regionPolygon *Geometry, crossRegionDistanceKm float32) *Geometry {
+	const (
+		earthRadius     = 6371000.0
+		oneDegreeMeters = 2 * math.Pi * earthRadius / 360
+		metersPerKM     = 1000.0
+	)
+	shell := regionPolygon.GetExteriorRing()
+	bufferedPolygon := shell.Buffer(float64(crossRegionDistanceKm / oneDegreeMeters * metersPerKM))
+	crossRegionPolygon := CreatePolygon(bufferedPolygon.GetExteriorRing().GetCoords(), shell.GetCoords())
+	return crossRegionPolygon
 }

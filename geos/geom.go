@@ -65,6 +65,9 @@ func (t GeometryType) ToString() string {
 
 type Geometry struct {
 	c *C.GEOSGeometry
+	// FIX 2: we explicitly keep a reference to our parent *Geometry
+	// with which we share memory so that it is not freed.
+	// parent *Geometry
 }
 
 func (g *Geometry) Clone() *Geometry {
@@ -107,7 +110,14 @@ func (g *Geometry) GetInteriorRingN(n int) *Geometry {
 // Only support Polygon
 func (g *Geometry) GetExteriorRing() *Geometry {
 	c := C.GEOSGetExteriorRing_r(ctxHandle, g.c)
-	return geomFromC(c, false)
+	x := geomFromC(c, false)
+
+	// FIX 2: we explicitly keep a reference to our parent *Geometry
+	// with which we share memory so that it is not freed.
+	// x.parent = g
+
+	runtime.KeepAlive(g)
+	return x
 }
 
 func (g *Geometry) GetNumCoordinates() int {

@@ -1006,5 +1006,10 @@ func BuildCrossRegionPolygon(regionPolygon *Geometry, crossRegionDistanceKm floa
 	shell := regionPolygon.GetExteriorRing()
 	bufferedPolygon := shell.Buffer(float64(crossRegionDistanceKm / oneDegreeMeters * metersPerKM))
 	crossRegionPolygon := CreatePolygon(bufferedPolygon.GetExteriorRing().GetCoords(), shell.GetCoords())
+
+	// FIX 1: use runtime.KeepAlive() everywhere because we share
+	// more than data than we (aka this lib) realizes.
+	// runtime.KeepAlive(regionPolygon)
+
 	return crossRegionPolygon
 }

@@ -4,10 +4,12 @@ import (
 	"math"
 	"runtime"
 	"unsafe"
+
+	_ "github.com/benesch/cgosymbolizer"
 )
 
 /*
-#cgo CFLAGS: -I/usr/local/include
+#cgo CFLAGS: -I/usr/local/include -g
 #cgo LDFLAGS: -L/usr/local/lib -lgeos_c
 #include <geos_c.h>
 #include <stdlib.h>

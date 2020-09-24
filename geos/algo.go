@@ -1,7 +1,7 @@
 package geos
 
 /*
-#cgo CFLAGS: -I/usr/local/include
+#cgo CFLAGS: -I/usr/local/include -g
 #cgo LDFLAGS: -L/usr/local/lib -lgeos_c
 #include <geos_c.h>
 

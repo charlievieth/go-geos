@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Simple script for running the failing cgo test(s)
+
+set -e
+
+# NB: uncomment to enable harder checks:
+#
+# export GODEBUG=cgocheck=2
+# export GOGC=500
+export GO111MODULE='on'
+
+_time_cmd="$(which time)"
+_time_args=''
+
+if ${_time_cmd} -v -- echo '' > /dev/null 2>&1; then
+    # GNU time
+    _time_args='-v'
+elif ${_time_cmd} -l -- echo '' > /dev/null 2>&1; then
+    # BSD time
+    _time_args='-l'
+else
+    echo "ERROR: unrecognized time command: ${_time_cmd}"
+    exit 1
+fi
+
+${_time_cmd} ${_time_args} -- go test -count 1 -run TestUseAfterFree ./... 2>&1 | tee test.log

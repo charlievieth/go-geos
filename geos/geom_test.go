@@ -78,11 +78,11 @@ func TestCreatePoint(t *testing.T) {
 
 func TestCreateLinearRing(t *testing.T) {
 	coords := []Coord{
-		Coord{0, 0},
-		Coord{1, 0},
-		Coord{1, 1},
-		Coord{0, 1},
-		Coord{0, 0}}
+		{0, 0},
+		{1, 0},
+		{1, 1},
+		{0, 1},
+		{0, 0}}
 
 	geom := CreateLinearRing(coords)
 	if geom != nil && geom.GetType() == LINEARRING {
@@ -94,11 +94,11 @@ func TestCreateLinearRing(t *testing.T) {
 
 func TestCreateLinearRingZ(t *testing.T) {
 	coords := []CoordZ{
-		CoordZ{0, 0, 0},
-		CoordZ{1, 0, 0},
-		CoordZ{1, 1, 0},
-		CoordZ{0, 1, 0},
-		CoordZ{0, 0, 0}}
+		{0, 0, 0},
+		{1, 0, 0},
+		{1, 1, 0},
+		{0, 1, 0},
+		{0, 0, 0}}
 
 	geom := CreateLinearRingZ(coords)
 	if geom != nil && geom.GetType() == LINEARRING {
@@ -110,9 +110,9 @@ func TestCreateLinearRingZ(t *testing.T) {
 
 func TestCreateLineString(t *testing.T) {
 	coords := []Coord{
-		Coord{0, 0},
-		Coord{1, 1},
-		Coord{2, 1}}
+		{0, 0},
+		{1, 1},
+		{2, 1}}
 
 	geom := CreateLineString(coords)
 	if geom != nil && geom.GetType() == LINESTRING {
@@ -124,9 +124,9 @@ func TestCreateLineString(t *testing.T) {
 
 func TestCreateLineStringZ(t *testing.T) {
 	coords := []CoordZ{
-		CoordZ{0, 0, 0},
-		CoordZ{1, 1, 0},
-		CoordZ{2, 1, 0}}
+		{0, 0, 0},
+		{1, 1, 0},
+		{2, 1, 0}}
 
 	geom := CreateLineStringZ(coords)
 	if geom != nil && geom.GetType() == LINESTRING {
@@ -138,18 +138,18 @@ func TestCreateLineStringZ(t *testing.T) {
 
 func TestCreatePolygon(t *testing.T) {
 	shell := []Coord{
-		Coord{0, 0},
-		Coord{3, 0},
-		Coord{3, 3},
-		Coord{0, 3},
-		Coord{0, 0}}
+		{0, 0},
+		{3, 0},
+		{3, 3},
+		{0, 3},
+		{0, 0}}
 
 	hole := []Coord{
-		Coord{1, 1},
-		Coord{2, 1},
-		Coord{2, 2},
-		Coord{1, 2},
-		Coord{1, 1}}
+		{1, 1},
+		{2, 1},
+		{2, 2},
+		{1, 2},
+		{1, 1}}
 
 	geom := CreatePolygon(shell, hole)
 	if geom != nil && geom.GetType() == POLYGON {
@@ -161,11 +161,11 @@ func TestCreatePolygon(t *testing.T) {
 
 func TestCreatePolygonZ(t *testing.T) {
 	shell := []CoordZ{
-		CoordZ{0, 0, 0},
-		CoordZ{3, 0, 0},
-		CoordZ{3, 3, 0},
-		CoordZ{0, 3, 0},
-		CoordZ{0, 0, 0}}
+		{0, 0, 0},
+		{3, 0, 0},
+		{3, 3, 0},
+		{0, 3, 0},
+		{0, 0, 0}}
 
 	geom := CreatePolygonZ(shell)
 	if geom != nil && geom.GetType() == POLYGON {
@@ -182,11 +182,11 @@ func TestCreateMultiGeometry(t *testing.T) {
 	geoms = append(geoms, CreatePoint(0, 0))
 	geoms = append(geoms, CreatePoint(1, 1))
 
-	geoms = append(geoms, CreateLineString([]Coord{Coord{0, 0}, Coord{1, 1}}))
-	geoms = append(geoms, CreateLineString([]Coord{Coord{0, 0}, Coord{-1, -1}}))
+	geoms = append(geoms, CreateLineString([]Coord{{0, 0}, {1, 1}}))
+	geoms = append(geoms, CreateLineString([]Coord{{0, 0}, {-1, -1}}))
 
-	geoms = append(geoms, CreatePolygon([]Coord{Coord{0, 0}, Coord{3, 0}, Coord{3, 3}, Coord{0, 3}, Coord{0, 0}}))
-	geoms = append(geoms, CreatePolygon([]Coord{Coord{0, 0}, Coord{-3, 0}, Coord{-3, -3}, Coord{0, -3}, Coord{0, 0}}))
+	geoms = append(geoms, CreatePolygon([]Coord{{0, 0}, {3, 0}, {3, 3}, {0, 3}, {0, 0}}))
+	geoms = append(geoms, CreatePolygon([]Coord{{0, 0}, {-3, 0}, {-3, -3}, {0, -3}, {0, 0}}))
 
 	geom = CreateMultiGeometry(geoms, MULTIPOINT)
 	if geom != nil && geom.GetType() == MULTIPOINT {
@@ -263,18 +263,18 @@ func TestGeometryInfo(t *testing.T) {
 	}
 
 	shell := []Coord{
-		Coord{0, 0},
-		Coord{3, 0},
-		Coord{3, 3},
-		Coord{0, 3},
-		Coord{0, 0}}
+		{0, 0},
+		{3, 0},
+		{3, 3},
+		{0, 3},
+		{0, 0}}
 
 	hole := []Coord{
-		Coord{1, 1},
-		Coord{2, 1},
-		Coord{2, 2},
-		Coord{1, 2},
-		Coord{1, 1}}
+		{1, 1},
+		{2, 1},
+		{2, 2},
+		{1, 2},
+		{1, 1}}
 
 	pg := CreatePolygon(shell, hole)
 
@@ -307,8 +307,8 @@ func TestGetXY(t *testing.T) {
 
 func TestGetCoords(t *testing.T) {
 	coords := []Coord{
-		Coord{0, 0},
-		Coord{1, 1}}
+		{0, 0},
+		{1, 1}}
 
 	ln := CreateLineString(coords)
 	coordsGot := ln.GetCoords()
@@ -326,11 +326,11 @@ func TestGetCoords(t *testing.T) {
 
 func TestArea(t *testing.T) {
 	pg := CreatePolygon([]Coord{
-		Coord{0, 0},
-		Coord{0, 3},
-		Coord{3, 3},
-		Coord{3, 0},
-		Coord{0, 0}})
+		{0, 0},
+		{0, 3},
+		{3, 3},
+		{3, 0},
+		{0, 0}})
 
 	if pg.Area() != 9 {
 		t.Errorf("Error: Area() error")
@@ -339,8 +339,8 @@ func TestArea(t *testing.T) {
 
 func TestLength(t *testing.T) {
 	ln := CreateLineString([]Coord{
-		Coord{0, 0},
-		Coord{0, 10}})
+		{0, 0},
+		{0, 10}})
 
 	if ln.Length() != 10 {
 		t.Errorf("Error: Length() error")
@@ -349,11 +349,11 @@ func TestLength(t *testing.T) {
 
 func TestDistance(t *testing.T) {
 	ln1 := CreateLineString([]Coord{
-		Coord{1, 0},
-		Coord{1, 2}})
+		{1, 0},
+		{1, 2}})
 	ln2 := CreateLineString([]Coord{
-		Coord{0, 0},
-		Coord{0, 2}})
+		{0, 0},
+		{0, 2}})
 
 	if ln1.Distance(ln2) != 1 {
 		t.Errorf("Error: Distance() error")
@@ -362,11 +362,11 @@ func TestDistance(t *testing.T) {
 
 func TestHausdorffDistance(t *testing.T) {
 	ln1 := CreateLineString([]Coord{
-		Coord{0, 0},
-		Coord{1, 0}})
+		{0, 0},
+		{1, 0}})
 	ln2 := CreateLineString([]Coord{
-		Coord{0, 0},
-		Coord{0, 2}})
+		{0, 0},
+		{0, 2}})
 
 	if ln1.HausdorffDistance(ln2) != 2 {
 		t.Errorf("Error: HausdorffDistance() error")
@@ -411,8 +411,8 @@ func TestNearestPointZs(t *testing.T) {
 func TestDisjoint(t *testing.T) {
 	pt := CreatePoint(0, 0)
 	ln := CreateLineString([]Coord{
-		Coord{1, 1},
-		Coord{2, 1}})
+		{1, 1},
+		{2, 1}})
 
 	if !pt.Disjoint(ln) {
 		t.Errorf("Error: Disjoint() error")
@@ -422,8 +422,8 @@ func TestDisjoint(t *testing.T) {
 func TestTouches(t *testing.T) {
 	pt := CreatePoint(1, 1)
 	ln := CreateLineString([]Coord{
-		Coord{1, 1},
-		Coord{2, 1}})
+		{1, 1},
+		{2, 1}})
 
 	if !pt.Touches(ln) {
 		t.Errorf("Error: Touches() error")
@@ -433,8 +433,8 @@ func TestTouches(t *testing.T) {
 func TestIntersects(t *testing.T) {
 	pt := CreatePoint(1.5, 1)
 	ln := CreateLineString([]Coord{
-		Coord{1, 1},
-		Coord{2, 1}})
+		{1, 1},
+		{2, 1}})
 
 	if !pt.Intersects(ln) {
 		t.Errorf("Error: Intersects() error")
@@ -443,11 +443,11 @@ func TestIntersects(t *testing.T) {
 
 func TestCrosses(t *testing.T) {
 	ln1 := CreateLineString([]Coord{
-		Coord{1, 1},
-		Coord{2, 1}})
+		{1, 1},
+		{2, 1}})
 	ln2 := CreateLineString([]Coord{
-		Coord{1.5, 0},
-		Coord{1.5, 2}})
+		{1.5, 0},
+		{1.5, 2}})
 
 	if !ln1.Crosses(ln2) {
 		t.Errorf("Error: Crosses() error")
@@ -465,8 +465,8 @@ func TestWithin(t *testing.T) {
 func TestContains(t *testing.T) {
 	pt := CreatePoint(0, 0)
 	ln := CreateLineString([]Coord{
-		Coord{1, 1},
-		Coord{2, 1}})
+		{1, 1},
+		{2, 1}})
 	m := CreateMultiGeometry([]*Geometry{pt, ln}, GEOMETRYCOLLECTION)
 
 	if !m.Contains(ln) {
@@ -476,18 +476,18 @@ func TestContains(t *testing.T) {
 
 func TestOverlaps(t *testing.T) {
 	pg1 := CreatePolygon([]Coord{
-		Coord{1, 0},
-		Coord{1, 3},
-		Coord{4, 3},
-		Coord{4, 0},
-		Coord{1, 0}})
+		{1, 0},
+		{1, 3},
+		{4, 3},
+		{4, 0},
+		{1, 0}})
 
 	pg2 := CreatePolygon([]Coord{
-		Coord{0, 0},
-		Coord{0, 3},
-		Coord{3, 3},
-		Coord{3, 0},
-		Coord{0, 0}})
+		{0, 0},
+		{0, 3},
+		{3, 3},
+		{3, 0},
+		{0, 0}})
 
 	if !pg1.Overlaps(pg2) {
 		t.Errorf("Error: Overlaps() error")
@@ -513,8 +513,8 @@ func TestEqualsExact(t *testing.T) {
 
 func TestCovers(t *testing.T) {
 	ln := CreateLineString([]Coord{
-		Coord{1, 1},
-		Coord{2, 1}})
+		{1, 1},
+		{2, 1}})
 	pt := CreatePoint(1, 1)
 
 	if !ln.Covers(pt) {
@@ -525,8 +525,8 @@ func TestCovers(t *testing.T) {
 func TestCoveredBy(t *testing.T) {
 	pt := CreatePoint(1, 1)
 	ln := CreateLineString([]Coord{
-		Coord{1, 1},
-		Coord{2, 1}})
+		{1, 1},
+		{2, 1}})
 
 	if !pt.CoveredBy(ln) {
 		t.Errorf("Error: CoveredBy() error")
@@ -570,18 +570,18 @@ func TestNormalize(t *testing.T) {
 
 func TestIsValid(t *testing.T) {
 	shell := []Coord{
-		Coord{0, 0},
-		Coord{3, 0},
-		Coord{3, 3},
-		Coord{0, 3},
-		Coord{0, 0}}
+		{0, 0},
+		{3, 0},
+		{3, 3},
+		{0, 3},
+		{0, 0}}
 
 	hole := []Coord{
-		Coord{1, 1},
-		Coord{2, 1},
-		Coord{2, 2},
-		Coord{1, 2},
-		Coord{1, 1}}
+		{1, 1},
+		{2, 1},
+		{2, 2},
+		{1, 2},
+		{1, 1}}
 
 	pg := CreatePolygon(hole, shell)
 
@@ -606,9 +606,9 @@ func TestIsEmpty(t *testing.T) {
 
 func TestIsSimple(t *testing.T) {
 	ln := CreateLineString([]Coord{
-		Coord{2, 1},
-		Coord{1, 1},
-		Coord{2, 1}})
+		{2, 1},
+		{1, 1},
+		{2, 1}})
 
 	if ln.IsSimple() {
 		t.Errorf("Error: IsSimple() error")
@@ -617,10 +617,10 @@ func TestIsSimple(t *testing.T) {
 
 func TestIsRing(t *testing.T) {
 	ring := CreateLinearRing([]Coord{
-		Coord{0, 0},
-		Coord{0, 1},
-		Coord{1, 1},
-		Coord{0, 0}})
+		{0, 0},
+		{0, 1},
+		{1, 1},
+		{0, 0}})
 
 	if !ring.IsRing() {
 		t.Errorf("Error: IsRing() error")
@@ -637,9 +637,9 @@ func TestHasZ(t *testing.T) {
 
 func TestIsClosed(t *testing.T) {
 	ln := CreateLineString([]Coord{
-		Coord{2, 1},
-		Coord{1, 1},
-		Coord{2, 1}})
+		{2, 1},
+		{1, 1},
+		{2, 1}})
 
 	if !ln.IsClosed() {
 		t.Errorf("Error: IsClosed() error")
@@ -903,9 +903,9 @@ func TestBuffer(t *testing.T) {
 
 func TestOffsetCurve(t *testing.T) {
 	ln := CreateLineString([]Coord{
-		Coord{0, 0},
-		Coord{10, 0},
-		Coord{10, 10}})
+		{0, 0},
+		{10, 0},
+		{10, 10}})
 
 	width := -10.0
 	quadsegs := 8
